@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AssetOpsBench — KDD 2026 Tutorial</title>
+  <meta name="description" content="AssetOpsBench: a hands-on tutorial at KDD 2026 on benchmarking AI agents for industrial asset operations and maintenance." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AssetOpsBench — KDD 2026 Tutorial" />
+  <meta property="og:description" content="A hands-on KDD 2026 tutorial on benchmarking AI agents for industrial asset operations." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --bg: #0e1116;
+      --bg-soft: #161b22;
+      --panel: #1b212b;
+      --border: #2a313c;
+      --text: #e6edf3;
+      --muted: #9aa7b5;
+      --accent: #4f8cff;
+      --accent-soft: #1f3354;
+      --accent-2: #38d39f;
+      --maxw: 980px;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- Nav ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14, 17, 22, 0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+    nav .brand { font-weight: 700; letter-spacing: -0.01em; }
+    nav .brand span { color: var(--accent); }
+    nav ul {
+      display: flex;
+      gap: 22px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.92rem;
+    }
+    nav ul a { color: var(--muted); }
+    nav ul a:hover { color: var(--text); text-decoration: none; }
+    .nav-toggle { display: none; }
+
+    /* ---------- Hero ---------- */
+    header.hero {
+      background:
+        radial-gradient(1100px 420px at 80% -10%, rgba(79,140,255,0.18), transparent 60%),
+        radial-gradient(800px 360px at 0% 0%, rgba(56,211,159,0.10), transparent 55%);
+      border-bottom: 1px solid var(--border);
+      padding: 70px 0 64px;
+      text-align: center;
+    }
+    .pill {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid #2c477a;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    header.hero h1 {
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      margin: 0 0 8px;
+      letter-spacing: -0.03em;
+    }
+    header.hero .subtitle {
+      font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto 26px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+    .meta-row .chip {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+    }
+
+    .btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      background: var(--bg-soft);
+      color: var(--text);
+      transition: transform 0.12s ease, border-color 0.12s ease;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--accent); }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.primary:hover { background: #3f7cf0; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+    section h2 {
+      font-size: 1.7rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    section .lead { color: var(--muted); margin: 0 0 28px; max-width: 760px; }
+
+    .placeholder {
+      color: var(--muted);
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 9px, rgba(255,255,255,0.02) 9px, rgba(255,255,255,0.02) 18px
+      );
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 2px 7px;
+      font-style: italic;
+    }
+
+    /* ---------- Schedule ---------- */
+    .schedule { display: flex; flex-direction: column; gap: 0; }
+    .slot {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+    }
+    .slot:last-child { border-bottom: 1px solid var(--border); }
+    .slot .time { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .slot .title { font-weight: 600; }
+    .slot .desc { color: var(--muted); font-size: 0.95rem; }
+
+    /* ---------- Cards ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .card .avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-soft), var(--panel));
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--accent);
+      margin-bottom: 14px;
+      font-size: 1.2rem;
+    }
+    .card h3 { margin: 0 0 4px; font-size: 1.05rem; }
+    .card .role { color: var(--muted); font-size: 0.9rem; }
+
+    ul.feature { padding-left: 0; list-style: none; display: grid; gap: 12px; }
+    ul.feature li { padding-left: 28px; position: relative; color: var(--muted); }
+    ul.feature li::before {
+      content: "▹"; color: var(--accent-2);
+      position: absolute; left: 4px; top: 0;
+    }
+    ul.feature strong { color: var(--text); }
+
+    /* ---------- Code / bibtex ---------- */
+    pre {
+      background: #0a0d12;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      color: #c9d4df;
+      line-height: 1.5;
+    }
+    code { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 36px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 680px) {
+      nav ul { display: none; }
+      .slot { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="brand">AssetOps<span>Bench</span></div>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#speakers">Speakers</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="pill">KDD 2026 · Hands-on Tutorial</div>
+      <h1>AssetOpsBench</h1>
+      <p class="subtitle">Benchmarking AI Agents for Industrial Asset Operations &amp; Maintenance</p>
+      <div class="meta-row">
+        <span class="chip">📍 <span class="placeholder">Venue / City, TBA</span></span>
+        <span class="chip">📅 <span class="placeholder">Date, August 2026</span></span>
+        <span class="chip">⏱ <span class="placeholder">Half-day / Full-day</span></span>
+      </div>
+      <div class="btns">
+        <a class="btn primary" href="#overview">Learn more</a>
+        <a class="btn" href="#resources">📄 Paper</a>
+        <a class="btn" href="#resources">💻 Code</a>
+        <a class="btn" href="#resources">🗂 Data</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ---------- Overview ---------- -->
+  <section id="overview">
+    <div class="wrap">
+      <h2>Overview</h2>
+      <p class="lead">
+        <span class="placeholder">
+          One- to two-paragraph abstract of the tutorial. Describe what AssetOpsBench is,
+          the problem it addresses (evaluating LLM/agentic systems for industrial asset
+          operations, predictive maintenance, anomaly detection, work-order reasoning, etc.),
+          and what attendees will learn and take away.
+        </span>
+      </p>
+      <ul class="feature">
+        <li><strong>Motivation.</strong> <span class="placeholder">Why benchmarking agents for asset operations matters.</span></li>
+        <li><strong>What you'll learn.</strong> <span class="placeholder">Key takeaways and skills attendees gain.</span></li>
+        <li><strong>Hands-on component.</strong> <span class="placeholder">Notebooks / live demo attendees can run.</span></li>
+        <li><strong>Target audience.</strong> <span class="placeholder">Prerequisites and who should attend.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ---------- Schedule ---------- -->
+  <section id="schedule">
+    <div class="wrap">
+      <h2>Schedule</h2>
+      <p class="lead">Tentative agenda — times in local conference time zone.</p>
+      <div class="schedule">
+        <div class="slot">
+          <div class="time"><span class="placeholder">0:00</span></div>
+          <div>
+            <div class="title">Introduction &amp; Motivation</div>
+            <div class="desc"><span class="placeholder">Brief description of this segment.</span></div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time"><span class="placeholder">0:30</span></div>
+          <div>
+            <div class="title">AssetOpsBench: Tasks &amp; Benchmark Design</div>
+            <div class="desc"><span class="placeholder">Brief description of this segment.</span></div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time"><span class="placeholder">1:15</span></div>
+          <div>
+            <div class="title">Hands-on Session</div>
+            <div class="desc"><span class="placeholder">Brief description of this segment.</span></div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time"><span class="placeholder">2:15</span></div>
+          <div>
+            <div class="title">Results, Discussion &amp; Q&amp;A</div>
+            <div class="desc"><span class="placeholder">Brief description of this segment.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Speakers ---------- -->
+  <section id="speakers">
+    <div class="wrap">
+      <h2>Speakers &amp; Organizers</h2>
+      <p class="lead">The team presenting this tutorial.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="avatar">A</div>
+          <h3><span class="placeholder">Speaker Name</span></h3>
+          <div class="role"><span class="placeholder">Affiliation · Role</span></div>
+        </div>
+        <div class="card">
+          <div class="avatar">B</div>
+          <h3><span class="placeholder">Speaker Name</span></h3>
+          <div class="role"><span class="placeholder">Affiliation · Role</span></div>
+        </div>
+        <div class="card">
+          <div class="avatar">C</div>
+          <h3><span class="placeholder">Speaker Name</span></h3>
+          <div class="role"><span class="placeholder">Affiliation · Role</span></div>
+        </div>
+        <div class="card">
+          <div class="avatar">D</div>
+          <h3><span class="placeholder">Speaker Name</span></h3>
+          <div class="role"><span class="placeholder">Affiliation · Role</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Resources ---------- -->
+  <section id="resources">
+    <div class="wrap">
+      <h2>Resources</h2>
+      <p class="lead">Materials will be posted here before and after the tutorial.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>📄 Paper</h3>
+          <div class="role"><a href="#"><span class="placeholder">arXiv / proceedings link</span></a></div>
+        </div>
+        <div class="card">
+          <h3>💻 Code</h3>
+          <div class="role"><a href="#"><span class="placeholder">GitHub repository</span></a></div>
+        </div>
+        <div class="card">
+          <h3>🗂 Dataset</h3>
+          <div class="role"><a href="#"><span class="placeholder">Data / benchmark link</span></a></div>
+        </div>
+        <div class="card">
+          <h3>📊 Slides</h3>
+          <div class="role"><a href="#"><span class="placeholder">Posted after the session</span></a></div>
+        </div>
+        <div class="card">
+          <h3>📓 Notebooks</h3>
+          <div class="role"><a href="#"><span class="placeholder">Colab / hands-on materials</span></a></div>
+        </div>
+        <div class="card">
+          <h3>▶️ Recording</h3>
+          <div class="role"><a href="#"><span class="placeholder">Posted after the session</span></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Cite ---------- -->
+  <section id="cite">
+    <div class="wrap">
+      <h2>Citation</h2>
+      <p class="lead">If you use AssetOpsBench, please cite:</p>
+<pre><code>@inproceedings{assetopsbench2026,
+  title     = {AssetOpsBench: Benchmarking AI Agents for Industrial Asset Operations},
+  author    = {Author, A. and Author, B. and others},
+  booktitle = {Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>AssetOpsBench · KDD 2026 Tutorial &nbsp;·&nbsp; <a href="https://github.com/ShuxinLin/assetopsbench-kdd-tutorial-2026">GitHub</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
