@@ -434,37 +434,63 @@
 
   <section class="speakers" id="speakers">
     <h2>Speakers</h2>
-    <div class="speaker-grid">
-      <div class="speaker">
-        <div class="avatar-ph">A</div>
-        <div class="speaker-info">
-          <h3><a href="#" target="_blank"><span class="placeholder">Speaker Name</span></a></h3>
-          <p><span class="placeholder">Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial.</span></p>
-        </div>
-      </div>
-      <div class="speaker">
-        <div class="avatar-ph">B</div>
-        <div class="speaker-info">
-          <h3><a href="#" target="_blank"><span class="placeholder">Speaker Name</span></a></h3>
-          <p><span class="placeholder">Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial.</span></p>
-        </div>
-      </div>
-      <div class="speaker">
-        <div class="avatar-ph">C</div>
-        <div class="speaker-info">
-          <h3><a href="#" target="_blank"><span class="placeholder">Speaker Name</span></a></h3>
-          <p><span class="placeholder">Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial.</span></p>
-        </div>
-      </div>
-      <div class="speaker">
-        <div class="avatar-ph">D</div>
-        <div class="speaker-info">
-          <h3><a href="#" target="_blank"><span class="placeholder">Speaker Name</span></a></h3>
-          <p><span class="placeholder">Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial.</span></p>
-        </div>
-      </div>
-    </div>
+    <!-- Cards are loaded from speakers.json — edit that file to update speakers. -->
+    <div class="speaker-grid" id="speaker-grid"></div>
   </section>
+
+  <script>
+    // Render speaker cards from speakers.json
+    (function () {
+      var grid = document.getElementById('speaker-grid');
+
+      function initial(name) {
+        var n = (name || '').trim();
+        return n ? n.charAt(0).toUpperCase() : '?';
+      }
+
+      function escapeHtml(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function render(speakers) {
+        grid.innerHTML = speakers.map(function (s) {
+          var name = escapeHtml(s.name || 'Speaker Name');
+          var url = escapeHtml(s.url || '#');
+          var bio = escapeHtml(s.bio || '');
+          var aff = s.affiliation ? '<p style="font-weight:500;color:#2c3e50;margin-bottom:6px;">' + escapeHtml(s.affiliation) + '</p>' : '';
+          var avatar = s.photo
+            ? '<img src="' + escapeHtml(s.photo) + '" alt="' + name + '">'
+            : '<div class="avatar-ph">' + escapeHtml(initial(s.name)) + '</div>';
+          var nameHtml = url && url !== '#'
+            ? '<a href="' + url + '" target="_blank">' + name + '</a>'
+            : name;
+          return '' +
+            '<div class="speaker">' +
+              avatar +
+              '<div class="speaker-info">' +
+                '<h3>' + nameHtml + '</h3>' +
+                aff +
+                '<p>' + bio + '</p>' +
+              '</div>' +
+            '</div>';
+        }).join('');
+      }
+
+      fetch('speakers.json', { cache: 'no-cache' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(render)
+        .catch(function (err) {
+          grid.innerHTML = '<p style="color:#b06a00;">Could not load speakers.json (' +
+            escapeHtml(err.message) + '). When viewing locally, serve over HTTP ' +
+            '(e.g. <code>python3 -m http.server</code>) rather than opening the file directly.</p>';
+        });
+    })();
+  </script>
 
   <footer class="footer">
     <p>AssetOpsBench · KDD 2026 Tutorial &nbsp;·&nbsp;
