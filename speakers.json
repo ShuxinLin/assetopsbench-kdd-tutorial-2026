@@ -1,30 +1,30 @@
 [
-  {
-    "name": "Speaker Name",
-    "url": "#",
-    "photo": "",
-    "affiliation": "Affiliation",
-    "bio": "Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial."
-  },
-  {
-    "name": "Speaker Name",
-    "url": "#",
-    "photo": "",
-    "affiliation": "Affiliation",
-    "bio": "Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial."
-  },
-  {
-    "name": "Speaker Name",
-    "url": "#",
-    "photo": "",
-    "affiliation": "Affiliation",
-    "bio": "Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial."
-  },
-  {
-    "name": "Speaker Name",
-    "url": "#",
-    "photo": "",
-    "affiliation": "Affiliation",
-    "bio": "Short bio: affiliation, research focus, and notable publications or contributions relevant to this tutorial."
-  }
+{
+"name": "Dr. Dhaval Patel",
+"url": "#",
+"photo": "",
+"affiliation": "Senior Technical Staff Member, IBM",
+"bio": "Dhaval Patel is a Senior Technical Staff Member at IBM, specializing in Industrial AI, time series foundation models, and agentic workflows. He leads the development of the AssetOpsBench framework and has pioneered research in multi-agent orchestration for Industry 4.0. He has an extensive publication record in top-tier conferences including KDD, AAAI, and NeurIPS, and has previously organized tutorials and workshops on enterprise-scale AI and anomaly detection."
+},
+{
+"name": "Chathurangi Shyalika",
+"url": "#",
+"photo": "",
+"affiliation": "Ph.D. Candidate, Artificial Intelligence Institute, University of South Carolina",
+"bio": "Chathurangi Shyalika is a senior Ph.D. candidate at the Artificial Intelligence Institute, University of South Carolina, and an incoming intern at IBM. Her research focuses on Multimodal and Agentic AI, Time Series Analysis, Neurosymbolic AI, and their applications in Industrial AI. Her work bridges low-level sensor data and high-level reasoning for autonomous systems. She has co-organized tutorials at major venues including AAAI, AAMAS, and US2TS."
+},
+{
+"name": "Shuxin Lin",
+"url": "#",
+"photo": "",
+"affiliation": "Research Engineer, IBM",
+"bio": "Shuxin Lin is a Research Engineer at IBM with expertise in full-stack LLM application development, evaluation, and MCP implementation. She is a main contributor to the AssetOpsBench codebase and focuses on LLM benchmarking and integrating heterogeneous data sources to enable industrial LLM agents."
+},
+{
+"name": "Prateek Biswas",
+"url": "#",
+"photo": "",
+"affiliation": "Senior Data Scientist, IBM",
+"bio": "Prateek Biswas is a Senior Data Scientist at IBM focusing on Agentic AI implementation for enterprise solutions across industrial, healthcare and life sciences, and state and local government domains. He has significant experience developing cloud-native tools for industrial monitoring and predictive maintenance, ensuring that AI agents operate reliably in production-grade enterprise environments."
+}
 ]
