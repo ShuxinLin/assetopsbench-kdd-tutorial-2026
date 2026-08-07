@@ -368,56 +368,63 @@
       <h1>Building Reliable Industrial Agents with MCP:<br>A Hands-on AssetOpsBench Tutorial for AI-Driven Operations</h1>
       <p>2026 KDD Hands-on Tutorial</p>
       <p>Tuesday, August 11, 2026 &nbsp; 1:30 PM – 4:30 PM</p>
-      <p>Location: <a href="#" target="_blank"><span class="placeholder">Venue</span></a>, Jeju, Korea</p>
+      <p>Location: Jeju, Korea</p>
     </div>
   </div>
 
   <section class="abstract">
     <h2>Abstract</h2>
     <p>
-      <span class="placeholder">
-        First abstract paragraph. Introduce the problem: AI agents and LLMs are increasingly
-        applied to industrial asset operations — predictive maintenance, anomaly detection,
-        fault diagnosis, work-order reasoning — yet evaluating their reliability in these
-        high-stakes settings remains an open challenge.
-      </span>
+      Industrial asset operations and maintenance require decisions grounded in heterogeneous
+      data, including sensor streams, asset hierarchies, failure-mode catalogs, and work-order
+      histories. Large language model agents can unify these sources and automate workflows
+      such as condition monitoring, fault diagnosis, and maintenance planning, but deployment
+      in safety-critical environments demands reliable tool use, traceable reasoning, and
+      rigorous evaluation. This tutorial introduces the Model Context Protocol (MCP) as a
+      practical foundation for connecting agents to industrial systems and AssetOpsBench as a
+      reproducible environment for developing and benchmarking them.
     </p>
     <p>
-      <span class="placeholder">
-        Second abstract paragraph. Introduce AssetOpsBench: what it measures, the tasks and
-        data it covers, the evaluation methodology, and what attendees will learn. Summarize
-        the takeaways and the hands-on component of the tutorial.
-      </span>
+      Participants will progress from core MCP concepts to hands-on execution with tools for
+      utilities, IoT and asset registries, failure-mode retrieval, work orders, time-series
+      analysis, and vibration diagnostics. Using guided notebooks, they will build a grounded
+      work-order agent with Stirrup, inspect its tool-use trajectory, evaluate its outputs
+      against static scenario data, and compare systems on an auditable leaderboard. The
+      tutorial connects architectural choices with grounding, safety, provenance, robustness,
+      and operational cost, equipping researchers and practitioners to design, diagnose, and
+      evaluate reliable AI agents for real-world industrial operations.
     </p>
   </section>
 
   <section class="schedule" id="schedule">
     <h2>Schedule</h2>
     <ul>
-      <li><strong>Section 1: Introduction and Motivation (<span class="placeholder">10 min</span>)</strong><br>
-        - <span class="placeholder">AI agents in industrial asset operations</span><br>
-        - <span class="placeholder">Why benchmarking and evaluation matter</span><br>
-        - <span class="placeholder">Overview of the tutorial</span>
+      <li><strong>Section 1: Foundations and Environment Check (1:30–1:55 PM, 25 min)</strong><br>
+        - Confirm Docker, CouchDB, the notebook kernel, and readiness checks<br>
+        - Introduce MCP tools, clients, servers, and agent workflows<br>
+        - Explore the AssetOpsBench architecture and benchmark pipeline
       </li>
-      <li><strong>Section 2: The AssetOpsBench Benchmark (<span class="placeholder">30 min</span>)</strong><br>
-        - <span class="placeholder">Task taxonomy and datasets</span><br>
-        - <span class="placeholder">Evaluation metrics and protocol</span><br>
-        - <span class="placeholder">Baselines and leaderboard</span>
+      <li><strong>Section 2: Industrial MCP Server Tour (1:55–2:40 PM, 45 min)</strong><br>
+        - Discover and call the Utilities, IoT, and asset-registry tools<br>
+        - Retrieve failure modes and analyze work orders through MCP<br>
+        - Profile time-series evidence and explore vibration diagnostics
       </li>
-      <li><strong>Section 3: Hands-on Session (<span class="placeholder">60 min</span>)</strong><br>
-        - <span class="placeholder">Environment setup and notebooks</span><br>
-        - <span class="placeholder">Running and evaluating an agent</span><br>
-        <br><em>(Break - <span class="placeholder">10 min</span>)</em><br>
+      <li><strong>Section 3: End-to-End Grounded Work-Order Agent (2:40–3:25 PM, 45 min)</strong><br>
+        - Configure Stirrup and build a grounded work-order question<br>
+        - Run the agent and persist its tool-use trajectory<br>
+        - Audit the result for grounding, safety, and output quality
       </li>
-      <li><strong>Section 4: Results and Analysis (<span class="placeholder">20 min</span>)</strong><br>
-        - <span class="placeholder">Findings across agents and tasks</span><br>
-        - <span class="placeholder">Failure modes and error analysis</span>
+      <li><strong>Break (3:25–3:35 PM, 10 min)</strong></li>
+      <li><strong>Section 4: Evaluation and Leaderboard (3:35–4:05 PM, 30 min)</strong><br>
+        - Evaluate a Stirrup trajectory with the static-JSON evaluator<br>
+        - Report pass rate and exact match across separate execution tracks<br>
+        - Rank results and export an auditable leaderboard
       </li>
-      <li><strong>Section 5: Open Challenges and Future Directions (<span class="placeholder">20 min</span>)</strong><br>
-        - <span class="placeholder">Generalization and robustness</span><br>
-        - <span class="placeholder">Real-world deployment considerations</span>
+      <li><strong>Section 5: Advanced Exercise and Open Challenges (4:05–4:20 PM, 15 min)</strong><br>
+        - Stage an FCC scenario, verify the record through MCP, and classify a failure code<br>
+        - Discuss grounding, provenance, robustness, and production deployment
       </li>
-      <li><strong>Q&A</strong></li>
+      <li><strong>Q&amp;A (4:20–4:30 PM, 10 min)</strong></li>
     </ul>
   </section>
 
@@ -425,10 +432,10 @@
     <h2>Tutorial Materials</h2>
     <ul>
       <li><a href="#"><span class="placeholder">Download Slides</span></a></li>
-      <li><a href="#"><span class="placeholder">Paper (PDF / arXiv)</span></a></li>
-      <li><a href="#"><span class="placeholder">Code Repository (GitHub)</span></a></li>
+      <li><a href="https://arxiv.org/abs/2506.03828v2" target="_blank">Paper (arXiv)</a></li>
+      <li><a href="https://github.com/IBM/AssetOpsBench" target="_blank">Code Repository (GitHub)</a></li>
       <li><a href="#"><span class="placeholder">Benchmark / Dataset</span></a></li>
-      <li><a href="#"><span class="placeholder">Hands-on Notebooks (Colab)</span></a></li>
+      <li><a href="https://github.com/ShuxinLin/assetopsbench-kdd-tutorial-2026/tree/main/notebook/kdd_tutorial" target="_blank">Hands-on Notebooks (GitHub)</a></li>
     </ul>
   </section>
 
